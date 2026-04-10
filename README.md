@@ -10,4 +10,5 @@
   <img src="https://badges.pufler.dev/years/enneket" alt="Years" />
   <img src="https://badges.pufler.dev/commits/monthly/enneket" alt="Commits" />
   <img src="https://badges.pufler.dev/gists/enneket" alt="Gists" />
+  <img src="https://badges.pufler.dev/last-stars/enneket" alt="Last Stars" />
 </p>
