@@ -1,37 +1,33 @@
-name: Generate Snake
+name: generate-snake
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 */24 * * *"
   workflow_dispatch:
-
-permissions:
-  contents: write
+  push:
+    branches:
+      - main
 
 jobs:
   generate:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Generate Snake SVG
-        uses: Platane/snk@v3
+      - name: Generate snake SVG
+        uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: enneket
+          github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-snake.svg
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      - name: Commit and Push
-        run: |
-          mkdir -p output
-          cp dist/github-snake.svg output/github-snake.svg 2>/dev/null || true
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          if [ -f output/github-snake.svg ]; then
-            git add output/github-snake.svg
-            git diff --staged --quiet || git commit -m "Update snake animation"
-            git push
-          else
-            echo "No snake SVG generated, skipping commit"
-          fi
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
