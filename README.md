@@ -7,11 +7,6 @@
 </p>
 
 <p align="center">
-  [![Last Stars Display](https://badges.pufler.dev/last-stars/enneket?count=6&padding=15&perRow=3)](https://badges.pufler.dev)
-</p>
-
-
-<p align="center">
   <img src="https://raw.githubusercontent.com/enneket/enneket/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 </p>
 
