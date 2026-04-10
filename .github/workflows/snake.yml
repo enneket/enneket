@@ -15,16 +15,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Generate Snake
+      - name: Generate Snake SVG
         uses: Platane/snk@v3
         with:
           github_user_name: enneket
-          svg_path: output/github-snake.svg
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          outputs: |
+            dist/github-snake.svg
 
       - name: Commit and Push
         run: |
+          mkdir -p output
+          cp dist/github-snake.svg output/github-snake.svg 2>/dev/null || true
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           if [ -f output/github-snake.svg ]; then
@@ -32,5 +33,5 @@ jobs:
             git diff --staged --quiet || git commit -m "Update snake animation"
             git push
           else
-            echo "Snake SVG not generated, skipping commit"
+            echo "No snake SVG generated, skipping commit"
           fi
